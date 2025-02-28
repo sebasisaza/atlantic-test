@@ -1,0 +1,23 @@
+.container {
+  padding: 20px 5%;
+
+  h1 {
+    color: #6859aa;
+    font-weight: 300;
+  }
+
+  .chip {
+    border-radius: 20px;
+    background-color: #6859aa;
+    padding: 5px 10px;
+    width: 100px;
+    color: #fff;
+  }
+}
+
+mat-paginator {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}

@@ -1,0 +1,24 @@
+<div class="container">
+  <h1>Search</h1>
+  <div class="advance-filters">
+    <span>ADVANCED SEARCH</span>
+    <form [formGroup]="search">
+      <input
+        matInput
+        type="text"
+        placeholder="Filter product"
+        formControlName="product"
+      />
+      <select formControlName="category">
+        <option value="">Select a Category</option>
+        <option *ngFor="let category of categories$ | async">
+          {{ category }}
+        </option>
+      </select>
+    </form>
+    <div class="buttons">
+      <button class="simple">RESET</button>
+      <button class="primary" (click)="onSearch()">SEARCH</button>
+    </div>
+  </div>
+</div>
