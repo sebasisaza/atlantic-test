@@ -32,9 +32,9 @@ export class ProductService {
     skip: number,
     category: string
   ): Observable<Response> {
-    const filters = `category/${category}?select=id,title,price,stock,weight,category&${limit}=5&skip=${
+    const filters = `category/${category}?&limit=${limit}&skip=${
       skip * limit
-    }`;
+    }&select=id,title,price,stock,weight,category`;
     return this.http.get<Response>(this.apiUrl + filters);
   }
 }

@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { Observable, of } from 'rxjs';
+import { delay, filter, Observable, of } from 'rxjs';
 import { Product } from '../models/post.model';
 import { CommonModule } from '@angular/common';
 import { Search } from '../models/search.model';
@@ -16,7 +16,8 @@ import { SharedService } from '../services/shared.service';
   styleUrl: './results.component.scss',
 })
 export class ResultsComponent implements OnInit, AfterViewInit {
-  receivedData: Search = { product: '', category: '' };
+  receivedDataProduct = '';
+  receivedDataCategory = '';
 
   dataSource = new MatTableDataSource<Product>();
   length: number = 0;
@@ -46,34 +47,59 @@ export class ResultsComponent implements OnInit, AfterViewInit {
   }
 
   onPageEvent(pageEvent: PageEvent): void {
-    if (this.receivedData.category) {
-      this._getDataByCategory(
+    console.log(this.receivedDataProduct);
+    console.log(this.receivedDataCategory);
+
+    console.log(pageEvent);
+
+    if (this.receivedDataProduct) {
+      this._getData(
         pageEvent.pageSize,
         pageEvent.pageIndex,
-        this.receivedData.category
+        this.receivedDataProduct
       );
+
       return;
     }
-    this._getData(pageEvent.pageSize, pageEvent.pageIndex, '');
+    this._getDataByCategory(
+      pageEvent.pageSize,
+      pageEvent.pageIndex,
+      this.receivedDataCategory
+    );
   }
 
   private _filter(): void {
-    this.sharedService.data$.subscribe((data) => {
-      this.receivedData = data;
-      if (this.receivedData.category) {
+    this.sharedService.product$
+      .pipe(
+        delay(500),
+        filter((product) => product !== '')
+      )
+      .subscribe((product) => {
+        this.receivedDataProduct = product;
+        this.receivedDataCategory = '';
+        this._getData(
+          this.paginator.pageSize,
+          this.paginator.pageIndex,
+          product
+        );
+
+        return;
+      });
+
+    this.sharedService.category$
+      .pipe(
+        delay(500),
+        filter((category) => category !== '')
+      )
+      .subscribe((category) => {
+        this.receivedDataProduct = '';
+        this.receivedDataCategory = category;
         this._getDataByCategory(
           this.paginator.pageSize,
           this.paginator.pageIndex,
-          this.receivedData.category
+          category
         );
-        return;
-      }
-      this._getData(
-        this.paginator.pageSize,
-        this.paginator.pageIndex,
-        this.receivedData.product
-      );
-    });
+      });
   }
 
   private _getData(limit: number, skip: number, search: string): void {

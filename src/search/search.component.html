@@ -3,13 +3,28 @@
   <div class="advance-filters">
     <span>ADVANCED SEARCH</span>
     <form [formGroup]="search">
+      <mat-slide-toggle
+        formControlName="searchByProduct"
+        (change)="onChangeToggle('searchByProduct', $event.checked)"
+        >Search by product:
+      </mat-slide-toggle>
+      <mat-slide-toggle
+        formControlName="searchByCategory"
+        (change)="onChangeToggle('searchByCategory', $event.checked)"
+        >Search by category:
+      </mat-slide-toggle>
+
       <input
+        *ngIf="search.get('searchByProduct')?.value"
         matInput
         type="text"
-        placeholder="Filter product"
+        placeholder="Filter by product"
         formControlName="product"
       />
-      <select formControlName="category">
+      <select
+        *ngIf="search.get('searchByCategory')?.value"
+        formControlName="category"
+      >
         <option value="">Select a Category</option>
         <option *ngFor="let category of categories$ | async">
           {{ category }}
@@ -17,7 +32,7 @@
       </select>
     </form>
     <div class="buttons">
-      <button class="simple">RESET</button>
+      <button class="simple" (click)="onReset()">RESET</button>
       <button class="primary" (click)="onSearch()">SEARCH</button>
     </div>
   </div>

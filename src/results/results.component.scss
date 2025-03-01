@@ -6,6 +6,13 @@
     font-weight: 300;
   }
 
+  div {
+    table {
+      overflow-x: auto;
+      font-size: 5px;
+    }
+  }
+
   .chip {
     border-radius: 20px;
     background-color: #6859aa;
@@ -20,4 +27,14 @@ mat-paginator {
   display: flex;
   justify-content: center;
   margin-top: 10px;
+}
+
+.hide-on-mobile {
+  display: none;
+}
+
+@media (width > 1024px) {
+  .column {
+    display: block;
+  }
 }

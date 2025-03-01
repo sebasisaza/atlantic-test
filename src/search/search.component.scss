@@ -7,7 +7,7 @@
   }
 
   .advance-filters {
-    width: 80%;
+    width: 90%;
     border-radius: 10px;
     box-shadow: 0 0 7px rgba(0, 0, 0, 0.2);
     padding: 4%;
@@ -24,12 +24,21 @@
       flex-direction: column;
       gap: 10px;
 
-      input,
-      select {
+      input {
         border: none;
         background: #d4d4d4;
         color: #8c8c8c;
         height: 40px;
+        border-radius: 30px;
+        padding: 5px 15px;
+        font-weight: 300;
+      }
+
+      select {
+        border: none;
+        background: #d4d4d4;
+        color: #8c8c8c;
+        height: 50px;
         border-radius: 30px;
         padding: 5px 15px;
         font-weight: 300;

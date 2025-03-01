@@ -1,19 +1,21 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Search } from '../models/search.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SharedService {
-  private dataSubject = new BehaviorSubject<Search>({
-    product: '',
-    category: '',
-  });
+  private productSubject = new BehaviorSubject<string>('');
+  private categorySubject = new BehaviorSubject<string>('');
 
-  data$ = this.dataSubject.asObservable();
+  product$ = this.productSubject.asObservable();
+  category$ = this.categorySubject.asObservable();
 
-  updateData(newData: Search) {
-    this.dataSubject.next(newData);
+  updateProduct(product: string) {
+    this.productSubject.next(product);
+  }
+
+  updateCategory(category: string) {
+    this.categorySubject.next(category);
   }
 }
