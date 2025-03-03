@@ -47,12 +47,10 @@ export class ResultsComponent implements OnInit, AfterViewInit {
   }
 
   onPageEvent(pageEvent: PageEvent): void {
-    console.log(this.receivedDataProduct);
-    console.log(this.receivedDataCategory);
-
-    console.log(pageEvent);
-
-    if (this.receivedDataProduct) {
+    if (
+      this.receivedDataProduct ||
+      (!this.receivedDataProduct && !this.receivedDataCategory)
+    ) {
       this._getData(
         pageEvent.pageSize,
         pageEvent.pageIndex,
